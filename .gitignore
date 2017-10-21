@@ -1,0 +1,7 @@
+env/
+.cache/
+dist/
+build/
+.coverage
+.vscode/
+*.egg-info/

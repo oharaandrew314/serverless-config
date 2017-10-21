@@ -1,0 +1,3 @@
+'''Tests'''
+
+STRING_PROP_1 = 'STRING_PROP_1'
