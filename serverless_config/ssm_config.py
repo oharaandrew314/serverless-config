@@ -10,8 +10,11 @@ class SsmConfig(ConfigBase):
     def __init__(self):
         self.client = boto3.client('ssm')
 
-    def get_str(self, prop_name, default_value=None):
-        '''Get the str property by name'''
+    def get_str(self, prop_name, default_value=None, **kwargs):
+        ''' Get a str property by name.
+
+            Raises ValueError if not found.
+        '''
         try:
             response = self.client.get_parameter(
                 Name=prop_name,
@@ -23,14 +26,10 @@ class SsmConfig(ConfigBase):
                 return default_value
             raise ValueError('Property not found: ' + prop_name)
 
-    def put(self, prop_name, prop_value):
-        ''' Set property by name.
+    def get_int(self, prop_name, default_value=None, **kwargs):
+        ''' Get an int property by name.
 
-            Only affects the environment for this python process.
+            Raises ValueError if not found.
+            Raises ValueError if not an int.
         '''
-        self.client.put_parameter(
-            Name=prop_name,
-            Value=prop_value,
-            Type='String',
-            Overwrite=True
-        )
+        return int(self.get_str(prop_name, default_value))

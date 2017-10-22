@@ -1,3 +1,4 @@
 '''Tests'''
 
 STRING_PROP_1 = 'STRING_PROP_1'
+INT_PROP_1 = 'INT_PROP_1'

@@ -43,7 +43,7 @@ config.get_str('string_prop')
 The `default_config` will first search in the `system environment`.  If the  parameter is not there, then it will search in `AWS SSM`.
 
 ```python
-from serverlessa_config import default_config
+from serverless_config import default_config
 config = default_config()
 ```
 
