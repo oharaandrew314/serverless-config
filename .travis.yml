@@ -8,6 +8,8 @@ python:
 - pypy
 - pypy3
 install:
+- pip install pipenv --quiet
+- pipenv lock
 - make
 - pip install --quiet codecov
 script:
