@@ -19,6 +19,14 @@ serverless-config
 
 A simple configuration client for AWS serverless Python systems.
 
+Installation
+------------
+
+.. code-block:: bash
+
+    pip install serverless-config
+
+
 Quickstart
 ----------
 
