@@ -4,6 +4,7 @@ import boto3
 
 from .config_base import ConfigBase
 
+
 class SsmConfig(ConfigBase):
     '''SsmConfig'''
 

@@ -1,5 +1,6 @@
 '''Base Config for others to implement'''
 
+
 class ConfigBase(object):
     '''Config Base Class'''
 

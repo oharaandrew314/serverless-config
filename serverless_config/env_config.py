@@ -9,6 +9,7 @@ from os import environ
 
 from .config_base import ConfigBase
 
+
 class EnvConfig(ConfigBase):
     '''EnvConfig'''
 

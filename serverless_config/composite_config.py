@@ -7,6 +7,7 @@
 
 from .config_base import ConfigBase
 
+
 class CompositeConfig(ConfigBase):
     '''Composite Config'''
 
