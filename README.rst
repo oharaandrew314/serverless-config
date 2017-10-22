@@ -36,7 +36,8 @@ Quickstart
     config = default_config()
 
     string_prop = config.get_str('string_prop')
-    int_prop = condfig.get_int('missing_int_prop', default_value=123)
+    int_prop = config.get_int('missing_int_prop', default_value=123)
+    secret_prop = config.get_str('secret_prop', WithDecryption=True)
 
 The default config will search for a parameter with the following order of precedence: **System Environment**, **AWS SSM Parameter Store**.  You can learn more about them below.
 
