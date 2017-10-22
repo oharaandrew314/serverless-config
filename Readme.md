@@ -1,6 +1,6 @@
 # serverless-config
 
-A simple configuration client for AWS serverless Python3 systems.
+A simple configuration client for AWS serverless Python systems.
 
 ## Quickstart
 
@@ -9,7 +9,7 @@ from serverless_config import default_config
 config = default_config()
 
 string_prop = config.get_str('string_prop')
-other_prop = condfig.get_str('missing_prop', default_value='other_prop')
+int_prop = condfig.get_int('missing_int_prop', default_value=123)
 ```
 
 The default config will search for a parameter with the following order of precedence: `System Environment`, `AWS SSM Parameter Store`.  You can learn more about them below.
