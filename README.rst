@@ -1,6 +1,22 @@
 serverless-config
 =================
 
+.. image:: https://travis-ci.org/oharaandrew314/serverless-config.svg?branch=master
+    :target: https://travis-ci.org/oharaandrew314/serverless-config
+    
+.. image:: https://img.shields.io/pypi/v/serverless-config.svg
+    :target: https://pypi.python.org/pypi/serverless-config
+
+.. image:: https://img.shields.io/pypi/l/serverless-config.svg
+    :target: https://pypi.python.org/pypi/serverless-config
+
+.. image:: https://img.shields.io/pypi/pyversions/serverless-config.svg
+    :target: https://pypi.python.org/pypi/serverless-config
+    
+.. image:: https://codecov.io/github/oharaandrew314/serverless-config/coverage.svg?branch=master
+    :target: https://codecov.io/github/oharaandrew314/serverless-config
+    :alt: codecov.io
+
 A simple configuration client for AWS serverless Python systems.
 
 Quickstart

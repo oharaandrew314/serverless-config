@@ -9,12 +9,12 @@ python:
 - pypy3
 install:
 - make
-- pip install --quiet coveralls
+- pip install --quiet codecov
 script:
 - make test
 after_success:
 - make lint coverage
-- coveralls
+- codecov
 deploy:
   provider: pypi
   user: ohara.andrew314
