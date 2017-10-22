@@ -9,7 +9,7 @@ with open(README_FILENAME, 'r') as f:
 
 setup(
     name='serverless-config',
-    version='0.1.5.dev5',
+    version='0.2.0',
 
     packages=['serverless_config'],
 
