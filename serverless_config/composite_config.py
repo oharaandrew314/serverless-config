@@ -19,7 +19,7 @@ class CompositeConfig(ConfigBase):
         '''Get the string property by name'''
         for config in self.configs:
             try:
-                return config.get_str(prop_name)
+                return config.get_str(prop_name, **kwargs)
             except ValueError:
                 pass
 

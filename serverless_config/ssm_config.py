@@ -19,7 +19,7 @@ class SsmConfig(ConfigBase):
         try:
             response = self.client.get_parameter(
                 Name=prop_name,
-                WithDecryption=True
+                **kwargs
             )
             return response['Parameter']['Value']
         except Exception:
@@ -33,4 +33,4 @@ class SsmConfig(ConfigBase):
             Raises ValueError if not found.
             Raises ValueError if not an int.
         '''
-        return int(self.get_str(prop_name, default_value))
+        return int(self.get_str(prop_name, default_value, **kwargs))

@@ -1,13 +1,13 @@
 '''Composite Config Tests'''
 
 import pytest
-from moto import mock_ssm
+from moto import mock_ssm, mock_kms
 import boto3
 
 from serverless_config import (
     default_config, env_config, ssm_config, custom_composite_config
 )
-from . import STRING_PROP_1, INT_PROP_1
+from . import STRING_PROP_1, INT_PROP_1, SECRET_INT_1, SECRET_STRING_1
 
 
 @pytest.fixture
@@ -26,6 +26,11 @@ def ssm_conf():
 def ssm():
     '''Return the AWS SSM Client'''
     return boto3.client('ssm')
+
+
+def key_id():
+    '''Return a KMS Key Id'''
+    return boto3.client('kms').create_key()['KeyMetadata']['KeyId']
 
 
 def test_env_prop(monkeypatch, config):
@@ -91,3 +96,39 @@ def test_get_invalid_int_prop(monkeypatch, config):
     monkeypatch.setenv(STRING_PROP_1, 'tolltroll')
     with pytest.raises(ValueError):
         config.get_int(STRING_PROP_1)
+
+
+@mock_kms
+@mock_ssm
+def test_get_ssm_secret_encrypted():
+    '''Test getting an ssm secret that is encrypted during transit'''
+    ssm().put_parameter(
+        Name=SECRET_STRING_1, Type='SecureString', KeyId=key_id(),
+        Value='secretstuff'
+    )
+    assert config().get_str(SECRET_STRING_1) != 'secretstuff'
+
+
+@mock_kms
+@mock_ssm
+def test_get_ssm_secret_decrypted():
+    '''Test getting an ssm secret that is decrypted during transit'''
+    ssm().put_parameter(
+        Name=SECRET_STRING_1, Type='SecureString', KeyId=key_id(),
+        Value='secretstuff'
+    )
+    assert (
+        config().get_str(SECRET_STRING_1, WithDecryption=True) ==
+        'secretstuff'
+    )
+
+
+@mock_kms
+@mock_ssm
+def test_get_ssm_int_secret_decrypted():
+    '''Test getting an ssm secret that is decrypted during transit'''
+    ssm().put_parameter(
+        Name=SECRET_INT_1, Type='SecureString', KeyId=key_id(),
+        Value='123'
+    )
+    assert config().get_int(SECRET_INT_1, WithDecryption=True) == 123

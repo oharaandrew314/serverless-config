@@ -2,10 +2,10 @@
 
 import pytest
 import boto3
-from moto import mock_ssm
+from moto import mock_ssm, mock_kms
 
 from serverless_config import ssm_config
-from . import STRING_PROP_1, INT_PROP_1
+from . import STRING_PROP_1, INT_PROP_1, SECRET_INT_1, SECRET_STRING_1
 
 
 def config():
@@ -16,6 +16,11 @@ def config():
 def ssm():
     '''Return ssm client'''
     return boto3.client('ssm')
+
+
+def key_id():
+    '''Return a KMS Key Id'''
+    return boto3.client('kms').create_key()['KeyMetadata']['KeyId']
 
 
 @mock_ssm
@@ -61,3 +66,39 @@ def test_get_invalid_int_prop():
         Name=STRING_PROP_1, Value='tolltrolls', Type='String')
     with pytest.raises(ValueError):
         config().get_int(STRING_PROP_1)
+
+
+@mock_ssm
+@mock_kms
+def test_get_secret_encrypted():
+    '''Test getting a secret that is encrypted in transmit'''
+    ssm().put_parameter(
+        Name=SECRET_STRING_1, Value='secretstuff', Type='SecureString',
+        KeyId=key_id()
+    )
+    assert config().get_str(SECRET_STRING_1) != 'secretstuff'
+
+
+@mock_ssm
+@mock_kms
+def test_get_secret_decrypted():
+    '''Test getting a secret that is decrypted in transmit'''
+    ssm().put_parameter(
+        Name=SECRET_STRING_1, Value='secretstuff', Type='SecureString',
+        KeyId=key_id()
+    )
+    assert (
+        config().get_str(SECRET_STRING_1, WithDecryption=True) ==
+        'secretstuff'
+    )
+
+
+@mock_ssm
+@mock_kms
+def test_get_int_secret_decrypted():
+    '''Test getting a secret that is decrypted in transmit'''
+    ssm().put_parameter(
+        Name=SECRET_INT_1, Value='123', Type='SecureString',
+        KeyId=key_id()
+    )
+    assert config().get_int(SECRET_INT_1, WithDecryption=True) == 123
