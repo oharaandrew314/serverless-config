@@ -49,7 +49,7 @@ The System environment is a good place to store microservice-specific parameters
 AWS SSM Parameter Store
 ~~~~~~~~~~~~~~~~~~~~~~~
 
-SSM is perfect for storing parameters that are shared across microservices.  It is fully managed, and does not require any configuration to get started.
+SSM is perfect for storing parameters that are shared across microservices, and for storing encrypted secrets.  It is fully managed, and does not require any configuration to get started.
 
 **Note**: the IAM role requires the `AmazonSSMReadOnlyAccess` policy to get properties from SSM.
 
@@ -58,6 +58,15 @@ SSM is perfect for storing parameters that are shared across microservices.  It 
     from serverless_config import ssm_config
     config = ssm_config()
     config.get_str('string_prop')
+
+A secret can optionally be decrypted in transit.  That way, you do not need to worry about configuring your IAM role for access to the KMS Key.
+
+.. code-block:: python
+
+    from serverless_config import ssm_config
+    config = ssm_config()
+    config.get_str('string_prop', WithDecryption=True)
+
 
 Composite Configs
 ~~~~~~~~~~~~~~~~~
