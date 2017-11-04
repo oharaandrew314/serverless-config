@@ -5,7 +5,7 @@ clean:
 	rm -rf dist build
 	pipenv run setup.py clean --all
 
-test: init
+test:
 	pipenv run pytest tests --cov-report term-missing --cov --blockage
 	pipenv run flake8
 
