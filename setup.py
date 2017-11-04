@@ -10,11 +10,7 @@ with open(README_FILENAME, 'r') as f:
 setup(
     name='serverless-config',
     version='0.2.1',
-
     packages=['serverless_config'],
-
-    # dependencies:
-    install_requires=['boto3'],
 
     # PyPI metadata
     author='Andrew O\'Hara',
@@ -33,9 +29,6 @@ setup(
         'Programming Language :: Python :: 2',
         'Programming Language :: Python :: 2.7',
         'Programming Language :: Python :: 3',
-        'Programming Language :: Python :: 3.4',
-        'Programming Language :: Python :: 3.5',
-        'Programming Language :: Python :: 3.6',
-        'Programming Language :: Python :: Implementation :: PyPy',
+        'Programming Language :: Python :: 3.6'
     ]
 )

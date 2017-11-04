@@ -6,15 +6,18 @@ clean:
 	pipenv run setup.py clean --all
 
 test:
-	pipenv run pytest tests --flake8 --cov-report term-missing --cov --blockage
+	pipenv run pytest tests --cov-report term-missing --cov --blockage
+	pipenv run flake8
 
-package:: clean
-	pipenv run setup.py bdist_wheel --universal
+package: clean
+	python setup.py bdist_wheel --universal
 
 publish-test: package
+	pip install -q setuptools wheel twine
 	twine upload -r pypitest dist/*
 
 publish: package
+	pip install -q setuptools wheel twine
 	twine upload -r pypi dist/*
 
 dev-mode:

@@ -29,6 +29,15 @@ Installation
 
     pip install serverless-config
 
+or
+
+.. code-block:: bash
+
+    pipenv install serverless-config
+
+AWS lambda includes *boto3* in its environment, so *serverless-config* does not include it as a dependency in order to decrease the deployment package size.
+If you wish to use *serverless-config* locally, be sure to install *boto3* as well.
+
 
 Quickstart
 ----------
