@@ -7,14 +7,12 @@ name = "pypi"
 
 [packages]
 
-"boto3" = "*"
-
 [dev-packages]
 
+boto3 = "*"
 moto = "*"
 pytest = "*"
-"pytest-flake8" = "*"
+flake8 = "*"
 pytest-cov = "*"
 pytest-blockage = "*"
 pytest-env = "*"
-twine = "*"

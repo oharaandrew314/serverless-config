@@ -9,12 +9,9 @@ with open(README_FILENAME, 'r') as f:
 
 setup(
     name='serverless-config',
-    version='0.2.1',
+    version='0.2.2.dev2',
 
     packages=['serverless_config'],
-
-    # dependencies:
-    install_requires=['boto3'],
 
     # PyPI metadata
     author='Andrew O\'Hara',
