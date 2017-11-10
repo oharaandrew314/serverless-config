@@ -22,7 +22,7 @@ serverless-config
 
 A simple configuration client for AWS serverless Python systems.
 
-There is also a There is also a `jvm version <https://github.com/oharaandrew314/aws-lambda-config-jvm>`_.
+There is also a `jvm version <https://github.com/oharaandrew314/aws-lambda-config-jvm>`_.
 
 Installation
 ------------
