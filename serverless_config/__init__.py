@@ -1,24 +1,16 @@
 '''slsconf'''
 
-from .env_config import EnvConfig
-from .ssm_config import SsmConfig
+from datetime import timedelta
+
+from .env_config import EnvConfig  # noqa F401
+from .ssm_config import SsmConfig  # noqa F401
+from .cached_config import CachedConfig
 from .composite_config import CompositeConfig
 from .config_base import ConfigBase
 assert ConfigBase
 
 
-def env_config():
-    '''Return a new System Environment Config'''
-    return EnvConfig()
-
-
-def ssm_config():
-    '''Return a new AWS SSM Config
-
-        NOTE: The IAM Role for this machine must have an appropriate SSM
-        Policy attached to it.
-    '''
-    return SsmConfig()
+DEFAULT_CACHE_DURATION = timedelta(minutes=5)
 
 
 def default_config():
@@ -29,12 +21,7 @@ def default_config():
         NOTE: The IAM Role for this machine must have an appropriate SSM
         Policy attached to it.
     '''
-    return CompositeConfig(env_config(), ssm_config())
-
-
-def custom_composite_config(*configs):
-    ''' Return a custom Composite Config.
-
-        Pass ion as many configs as you want in order of precedence.
-    '''
-    return CompositeConfig(*configs)
+    return CachedConfig(
+        CompositeConfig(EnvConfig(), SsmConfig()),
+        DEFAULT_CACHE_DURATION
+    )

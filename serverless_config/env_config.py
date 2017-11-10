@@ -14,20 +14,12 @@ class EnvConfig(ConfigBase):
     '''EnvConfig'''
 
     def get_str(self, prop_name, default_value=None, **kwargs):
-        ''' Get a str property by name.
-
-            Raises ValueError if not found.
-        '''
-        if prop_name in environ:
-            return environ[prop_name]
-        elif default_value:
-            return default_value
-        raise ValueError('Property not found: ' + prop_name)
+        ''' Get a str property by name or None'''
+        return environ.get(prop_name, default_value)
 
     def get_int(self, prop_name, default_value=None, **kwargs):
-        ''' Get an int property by name.
-
-            Raises ValueError if not found.
+        ''' Get an int property by name or None.
             Raises ValueError if not an int.
         '''
-        return int(self.get_str(prop_name))
+        value = self.get_str(prop_name, default_value, **kwargs)
+        return int(value) if value else None

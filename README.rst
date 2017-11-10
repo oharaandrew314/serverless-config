@@ -65,8 +65,8 @@ The System environment is a good place to store microservice-specific parameters
 
 .. code-block:: python
 
-    from serverless_config import env_config
-    config = env_config()
+    from serverless_config import EnvConfig
+    config = EnvConfig()
     config.get_str('string_prop')
 
 AWS SSM Parameter Store
@@ -78,16 +78,16 @@ SSM is perfect for storing parameters that are shared across microservices, and 
 
 .. code-block:: python
 
-    from serverless_config import ssm_config
-    config = ssm_config()
+    from serverless_config import SsmConfig
+    config = SsmConfig()
     config.get_str('string_prop')
 
 A secret can optionally be decrypted in transit.  That way, you do not need to worry about configuring your IAM role for access to the KMS Key.
 
 .. code-block:: python
 
-    from serverless_config import ssm_config
-    config = ssm_config()
+    from serverless_config import SsmConfig
+    config = SsmConfig()
     config.get_str('string_prop', WithDecryption=True)
 
 
@@ -108,7 +108,7 @@ You can even implement your own custom configs and composite configs!
 
 .. code-block:: python
 
-    from serverless_config import ConfigBase, custom_composite_config, env_config
+    from serverless_config import ConfigBase, CompositeConfig, EnvConfig
 
     class DictConfig(ConfigBase):
 
@@ -129,4 +129,4 @@ You can even implement your own custom configs and composite configs!
     map_config = DictConfig(props)
 
     # And you can make a custom composite config with your new config
-    custom_config = custom_composite_config(map_config, env_config())
+    custom_config = CompositeConfig(map_config, EnvConfig())
