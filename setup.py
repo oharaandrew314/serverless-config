@@ -9,7 +9,7 @@ with open(README_FILENAME, 'r') as f:
 
 setup(
     name='serverless-config',
-    version='0.3.0',
+    version='0.3.1',
     packages=['serverless_config'],
 
     # PyPI metadata

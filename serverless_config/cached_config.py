@@ -1,14 +1,17 @@
 '''Cached Config'''
 
-from datetime import datetime
+from datetime import datetime, timedelta
 
 from .config_base import ConfigBase
+
+
+DEFAULT_CACHE_DURATION = timedelta(minutes=5)
 
 
 class CachedConfig(ConfigBase):
     '''Cached Config'''
 
-    def __init__(self, config, duration):
+    def __init__(self, config, duration=DEFAULT_CACHE_DURATION):
         self._config = config
         self._duration = duration
         self._cache = dict()
