@@ -16,3 +16,9 @@ def test_get_str(config):
     '''Test that get_str is not implemented'''
     with pytest.raises(NotImplementedError):
         config.get_str(STRING_PROP_1)
+
+
+def test_get_int(config):
+    '''Test that get_int is not implemented'''
+    with pytest.raises(NotImplementedError):
+        config.get_int(STRING_PROP_1)

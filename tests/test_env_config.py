@@ -2,20 +2,19 @@
 
 import pytest
 
-from serverless_config import env_config
+from serverless_config import EnvConfig
 from . import STRING_PROP_1, INT_PROP_1
 
 
 @pytest.fixture
 def config():
     '''Config object'''
-    return env_config()
+    return EnvConfig()
 
 
 def test_get_missing_prop(config):
     '''Test get missing prop'''
-    with pytest.raises(ValueError):
-        config.get_str(STRING_PROP_1)
+    assert config.get_str(STRING_PROP_1) is None
 
 
 def test_get_default_prop(config):

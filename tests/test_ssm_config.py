@@ -4,13 +4,13 @@ import pytest
 import boto3
 from moto import mock_ssm, mock_kms
 
-from serverless_config import ssm_config
+from serverless_config import SsmConfig
 from . import STRING_PROP_1, INT_PROP_1, SECRET_INT_1, SECRET_STRING_1
 
 
 def config():
     '''Return config'''
-    return ssm_config()
+    return SsmConfig()
 
 
 def ssm():
@@ -26,8 +26,7 @@ def key_id():
 @mock_ssm
 def test_get_missing_prop():
     '''Test get missing prop'''
-    with pytest.raises(ValueError):
-        config().get_str(STRING_PROP_1)
+    assert config().get_str(STRING_PROP_1) is None
 
 
 @mock_ssm

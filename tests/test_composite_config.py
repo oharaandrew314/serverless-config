@@ -4,22 +4,20 @@ import pytest
 from moto import mock_ssm, mock_kms
 import boto3
 
-from serverless_config import (
-    default_config, env_config, ssm_config, custom_composite_config
-)
+from serverless_config import EnvConfig, SsmConfig, CompositeConfig
 from . import STRING_PROP_1, INT_PROP_1, SECRET_INT_1, SECRET_STRING_1
 
 
 @pytest.fixture
 def config():
     '''Return the composite config'''
-    return default_config()
+    return CompositeConfig(EnvConfig(), SsmConfig())
 
 
 @pytest.fixture
 def ssm_conf():
     '''Return the SSM Config'''
-    return ssm_config()
+    return SsmConfig()
 
 
 @pytest.fixture
@@ -64,7 +62,7 @@ def test_all_props_default_order(monkeypatch, config, ssm_conf, ssm):
 
 def test_all_props_reverse_order(monkeypatch, ssm_conf, ssm):
     '''Test searching in reverse order'''
-    config = custom_composite_config(ssm_conf, env_config())
+    config = CompositeConfig(ssm_conf, EnvConfig())
 
     monkeypatch.setenv(STRING_PROP_1, 'tolltrolls')
     with mock_ssm():
@@ -81,8 +79,7 @@ def test_default_value(config):
 def test_no_value(config):
     '''Test with no value'''
     with mock_ssm():
-        with pytest.raises(ValueError):
-            assert config.get_str(STRING_PROP_1)
+        assert config.get_str(STRING_PROP_1) is None
 
 
 def test_get_int_prop(monkeypatch, config):

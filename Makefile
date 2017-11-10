@@ -13,11 +13,11 @@ package: clean
 	python setup.py bdist_wheel --universal
 
 publish-test: package
-	pip install -q setuptools wheel twine
+	pip install -q twine
 	twine upload -r pypitest dist/*
 
 publish: package
-	pip install -q setuptools wheel twine
+	pip install -q twine
 	twine upload -r pypi dist/*
 
 dev-mode:

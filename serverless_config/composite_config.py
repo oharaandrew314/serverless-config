@@ -18,15 +18,11 @@ class CompositeConfig(ConfigBase):
     def get_str(self, prop_name, default_value=None, **kwargs):
         '''Get the string property by name'''
         for config in self.configs:
-            try:
-                return config.get_str(prop_name, **kwargs)
-            except ValueError:
-                pass
+            value = config.get_str(prop_name, **kwargs)
+            if value:
+                return value
 
-        if default_value:
-            return default_value
-
-        raise ValueError('Property not found: ' + prop_name)
+        return default_value
 
     def get_int(self, prop_name, default_value=None, **kwargs):
         ''' Get an int property by name.
@@ -34,4 +30,5 @@ class CompositeConfig(ConfigBase):
             Raises ValueError if not found.
             Raises ValueError if not an int.
         '''
-        return int(self.get_str(prop_name, default_value, **kwargs))
+        value = self.get_str(prop_name, default_value, **kwargs)
+        return int(value) if value else None
