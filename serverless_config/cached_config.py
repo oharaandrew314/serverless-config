@@ -20,7 +20,6 @@ class CachedConfig(ConfigBase):
         '''Get the string property by name or None'''
         now = self.now()
         if prop_name not in self._cache or self._cache[prop_name][1] < now:
-            print('cache miss')
             value = self._config.get_str(prop_name, default_value, **kwargs)
             self._cache[prop_name] = (value, now + self._duration)
 
